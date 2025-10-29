@@ -44,7 +44,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background:
+            background: 
                 radial-gradient(circle at 20% 30%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 80% 70%, rgba(245, 87, 108, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 50% 50%, rgba(74, 222, 128, 0.05) 0%, transparent 50%);
@@ -53,15 +53,8 @@
         }
 
         @keyframes bgShift {
-
-            0%,
-            100% {
-                transform: translateY(0) rotate(0deg);
-            }
-
-            50% {
-                transform: translateY(-20px) rotate(2deg);
-            }
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
         }
 
         /* Floating particles */
@@ -77,22 +70,13 @@
         }
 
         @keyframes float {
-
-            0%,
-            100% {
+            0%, 100% { 
                 transform: translateY(0) translateX(0);
                 opacity: 0;
             }
-
-            10% {
-                opacity: 1;
-            }
-
-            90% {
-                opacity: 1;
-            }
-
-            100% {
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { 
                 transform: translateY(-100vh) translateX(50px);
                 opacity: 0;
             }
@@ -115,7 +99,6 @@
                 transform: translateY(-100%);
                 opacity: 0;
             }
-
             to {
                 transform: translateY(0);
                 opacity: 1;
@@ -185,7 +168,6 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
-
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -323,9 +305,8 @@
             -webkit-overflow-scrolling: touch;
             margin-bottom: 1rem;
             position: relative;
+            background: transparent;
             padding-bottom: 0.5rem;
-            border: 1px solid var(--border-glow);
-            background: var(--card-bg);
         }
 
         /* Custom Scrollbar untuk Table - Lebih Visible */
@@ -357,8 +338,10 @@
             color: var(--text-primary) !important;
             margin-bottom: 0;
             min-width: 800px;
-            border-collapse: collapse;
+            border-collapse: collapse !important;
             background: transparent;
+            table-layout: auto;
+            width: 100%;
         }
 
         /* Table Header */
@@ -376,15 +359,20 @@
             padding: 1rem !important;
             color: #ffffff !important;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
             background: transparent !important;
+            white-space: nowrap;
+            text-align: center;
         }
 
         .table thead th:first-child {
             border-left: none !important;
+            border-top-left-radius: 12px;
         }
 
         .table thead th:last-child {
             border-right: none !important;
+            border-top-right-radius: 12px;
         }
 
         /* Table Body Rows */
@@ -394,9 +382,22 @@
             position: relative;
         }
 
+        .table tbody tr::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--primary-gradient);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+
         .table tbody tr:hover {
             background: rgba(102, 126, 234, 0.15) !important;
-            transform: scale(1.01);
+            transform: translateX(2px);
             box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
         }
 
@@ -426,17 +427,29 @@
             position: relative;
             transition: all 0.2s ease;
             background: transparent !important;
+            white-space: normal;
+            word-wrap: break-word;
         }
 
         .table tbody td:first-child {
             font-weight: 600;
             color: #a78bfa !important;
+            text-align: center;
         }
 
         /* Hover effect pada cell */
         .table tbody tr:hover td {
             border-color: rgba(102, 126, 234, 0.4) !important;
             color: #ffffff !important;
+        }
+
+        /* Text alignment untuk kolom tertentu */
+        .table .text-center {
+            text-align: center !important;
+        }
+
+        .table .text-end {
+            text-align: right !important;
         }
 
         /* Corner borders untuk last row */
@@ -460,9 +473,16 @@
 
         /* Remove conflicting Bootstrap styles */
         .table-dark,
+        .table-bordered,
         .table-bordered thead th,
+        .table-bordered tbody td,
         .table-hover tbody tr:hover {
             background: transparent !important;
+        }
+
+        /* Fix untuk badge di dalam tabel */
+        .table .badge {
+            white-space: nowrap;
         }
 
         /* Action buttons in table */
@@ -498,20 +518,12 @@
         }
 
         @keyframes pulse {
-
-            0%,
-            100% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0.8;
-            }
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
         }
 
         /* Form Styles */
-        .form-control,
-        .form-select {
+        .form-control, .form-select {
             background: var(--glass-bg);
             border: 1px solid var(--border-glow);
             color: var(--text-primary);
@@ -520,8 +532,7 @@
             transition: all 0.3s ease;
         }
 
-        .form-control:focus,
-        .form-select:focus {
+        .form-control:focus, .form-select:focus {
             background: rgba(255, 255, 255, 0.08);
             border-color: rgba(102, 126, 234, 0.6);
             box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
@@ -578,7 +589,6 @@
                 opacity: 0;
                 transform: translateX(50px);
             }
-
             to {
                 opacity: 1;
                 transform: translateX(0);
@@ -661,13 +671,8 @@
         }
 
         @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         /* Responsive adjustments */
@@ -675,7 +680,7 @@
             .card {
                 margin-bottom: 1.5rem;
             }
-
+            
             .table {
                 font-size: 0.875rem;
             }
@@ -757,7 +762,7 @@
     <footer class="text-center">
         <div class="container">
             <p class="mb-0">
-                <i class="bi bi-code-slash"></i>
+                <i class="bi bi-code-slash"></i> 
                 &copy; {{ date('Y') }} SHEMSTARTUP - Futuristic Employee Management System
             </p>
         </div>

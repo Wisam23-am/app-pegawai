@@ -40,22 +40,25 @@
                                 <td>{{ $position->nama_jabatan }}</td>
                                 <td class="text-end">Rp {{ number_format($position->gaji_pokok, 0, ',', '.') }}</td>
                                 <td class="text-center">
-                                    <form onsubmit="return confirm('Apakah Anda Yakin ingin menghapus data ini?');"
-                                        action="{{ route('positions.destroy', $position->id) }}" method="POST">
+                                    <div class="action-buttons">
                                         <a href="{{ route('positions.show', $position->id) }}"
-                                            class="btn btn-sm btn-info text-white me-1">
-                                            <i class="bi bi-eye"></i> Detail
+                                            class="btn btn-sm btn-info text-white" title="Detail">
+                                            <i class="bi bi-eye"></i>
                                         </a>
-                                        <a href="{{ route('positions.edit', $position->id) }}"
-                                            class="btn btn-sm btn-primary me-1">
-                                            <i class="bi bi-pencil-square"></i> Edit
+                                        <a href="{{ route('positions.edit', $position->id) }}" class="btn btn-sm btn-primary"
+                                            title="Edit">
+                                            <i class="bi bi-pencil-square"></i>
                                         </a>
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger">
-                                            <i class="bi bi-trash"></i> Hapus
-                                        </button>
-                                    </form>
+                                        <form onsubmit="return confirm('Apakah Anda Yakin?');"
+                                            action="{{ route('positions.destroy', $position->id) }}" method="POST"
+                                            class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         @empty

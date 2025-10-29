@@ -38,22 +38,25 @@
                                 <td class="text-center">{{ $departments->firstItem() + $loop->index }}</td>
                                 <td>{{ $department->nama_departemen }}</td>
                                 <td class="text-center">
-                                    <form onsubmit="return confirm('Apakah Anda Yakin ingin menghapus data ini?');"
-                                        action="{{ route('departments.destroy', $department->id) }}" method="POST">
+                                    <div class="action-buttons">
                                         <a href="{{ route('departments.show', $department->id) }}"
-                                            class="btn btn-sm btn-info text-white me-1">
-                                            <i class="bi bi-eye"></i> Detail
+                                            class="btn btn-sm btn-info text-white" title="Detail">
+                                            <i class="bi bi-eye"></i>
                                         </a>
                                         <a href="{{ route('departments.edit', $department->id) }}"
-                                            class="btn btn-sm btn-primary me-1">
-                                            <i class="bi bi-pencil-square"></i> Edit
+                                            class="btn btn-sm btn-primary" title="Edit">
+                                            <i class="bi bi-pencil-square"></i>
                                         </a>
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger">
-                                            <i class="bi bi-trash"></i> Hapus
-                                        </button>
-                                    </form>
+                                        <form onsubmit="return confirm('Apakah Anda Yakin?');"
+                                            action="{{ route('departments.destroy', $department->id) }}" method="POST"
+                                            class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         @empty

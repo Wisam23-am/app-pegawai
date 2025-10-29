@@ -6,13 +6,15 @@
 @section('content')
     <div class="card shadow-sm">
         <div class="card-header bg-primary text-white">
-            <h5 class="card-title mb-0">Daftar Karyawan</h5>
+            <h5 class="card-title mb-0">
+                <i class="bi bi-people-fill"></i> Daftar Karyawan
+            </h5>
         </div>
         <div class="card-body">
 
             @if(session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('success') }}
+                    <i class="bi bi-check-circle-fill"></i> {{ session('success') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
@@ -25,7 +27,6 @@
                 <table class="table table-bordered table-striped table-hover">
                     <thead class="table-dark text-center">
                         <tr>
-                            {{-- UBAH INI --}}
                             <th style="width: 5%;">No.</th>
                             <th>Nama Lengkap</th>
                             <th>Email</th>
@@ -33,7 +34,7 @@
                             <th>Jabatan</th>
                             <th>Departemen</th>
                             <th>Status</th>
-                            <th style="width: 20%;">Aksi</th>
+                            <th style="width: 15%;">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -54,32 +55,29 @@
                                         <span class="badge bg-secondary">Tidak Aktif</span>
                                     @endif
                                 </td>
-                                <td class="text-center">
-                                    <form onsubmit="return confirm('Apakah Anda Yakin?');"
-                                        action="{{ route('employees.destroy', $employee->id) }}" method="POST">
-                                        {{-- Tombol Detail --}}
+                                <td>
+                                    <div class="action-buttons">
                                         <a href="{{ route('employees.show', $employee->id) }}"
-                                            class="btn btn-sm btn-info text-white me-1">
-                                            <i class="bi bi-eye"></i> Detail
+                                            class="btn btn-sm btn-info text-white" title="Detail">
+                                            <i class="bi bi-eye"></i>
                                         </a>
-                                        {{-- Tombol Edit --}}
-                                        <a href="{{ route('employees.edit', $employee->id) }}"
-                                            class="btn btn-sm btn-primary me-1">
-                                            <i class="bi bi-pencil-square"></i> Edit
+                                        <a href="{{ route('employees.edit', $employee->id) }}" class="btn btn-sm btn-primary"
+                                            title="Edit">
+                                            <i class="bi bi-pencil-square"></i>
                                         </a>
-
-                                        @csrf
-                                        @method('DELETE')
-                                        {{-- Tombol Hapus --}}
-                                        <button type="submit" class="btn btn-sm btn-danger">
-                                            <i class="bi bi-trash"></i> Hapus
-                                        </button>
-                                    </form>
+                                        <form onsubmit="return confirm('Apakah Anda Yakin?');"
+                                            action="{{ route('employees.destroy', $employee->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                {{-- Pastikan colspan sesuai jumlah kolom thead --}}
                                 <td colspan="8" class="text-center alert alert-danger">
                                     Data Karyawan belum Tersedia.
                                 </td>
@@ -88,7 +86,7 @@
                     </tbody>
                 </table>
 
-                <div class="d-flex justify-content-center">
+                <div class="d-flex justify-content-center mt-3">
                     {{ $employees->links() }}
                 </div>
             </div>

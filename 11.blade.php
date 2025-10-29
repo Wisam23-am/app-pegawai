@@ -323,9 +323,8 @@
             -webkit-overflow-scrolling: touch;
             margin-bottom: 1rem;
             position: relative;
+            background: transparent;
             padding-bottom: 0.5rem;
-            border: 1px solid var(--border-glow);
-            background: var(--card-bg);
         }
 
         /* Custom Scrollbar untuk Table - Lebih Visible */
@@ -357,7 +356,8 @@
             color: var(--text-primary) !important;
             margin-bottom: 0;
             min-width: 800px;
-            border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 0;
             background: transparent;
         }
 
@@ -376,15 +376,18 @@
             padding: 1rem !important;
             color: #ffffff !important;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
             background: transparent !important;
         }
 
         .table thead th:first-child {
             border-left: none !important;
+            border-top-left-radius: 12px;
         }
 
         .table thead th:last-child {
             border-right: none !important;
+            border-top-right-radius: 12px;
         }
 
         /* Table Body Rows */
@@ -392,6 +395,19 @@
             background: rgba(15, 23, 42, 0.4) !important;
             transition: all 0.3s ease;
             position: relative;
+        }
+
+        .table tbody tr::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--primary-gradient);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
         }
 
         .table tbody tr:hover {

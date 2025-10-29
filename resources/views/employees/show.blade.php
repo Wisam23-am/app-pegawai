@@ -6,7 +6,9 @@
 @section('content')
     <div class="card shadow-sm">
         <div class="card-header bg-info text-white">
-            <h5 class="card-title mb-0">Detail Karyawan: {{ $employee->nama_lengkap }}</h5>
+            <h5 class="card-title mb-0">
+                <i class="bi bi-person-circle"></i> Detail Karyawan: {{ $employee->nama_lengkap }}
+            </h5>
         </div>
         <div class="card-body">
 
@@ -67,9 +69,11 @@
                 </div>
             </div>
 
-            <hr>
+            <hr style="border-color: rgba(102, 126, 234, 0.3);">
             <div class="d-flex justify-content-end">
-                <a href="{{ route('employees.index') }}" class="btn btn-secondary">Kembali ke Daftar</a>
+                <a href="{{ route('employees.index') }}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Kembali ke Daftar
+                </a>
             </div>
         </div>
     </div>
