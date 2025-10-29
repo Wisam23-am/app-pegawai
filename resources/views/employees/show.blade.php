@@ -1,36 +1,76 @@
-@extends('layouts.app')
+@extends('master')
+
+@section('title', 'Detail Karyawan')
+@section('page-title', 'Detail Karyawan')
 
 @section('content')
-    <h1>Detail Pegawai</h1>
-    <table class="table table-bordered">
-        <tr>
-            <th width="200px">Nama Lengkap</th>
-            <td>{{ $employee->nama_lengkap }}</td>
-        </tr>
-        <tr>
-            <th>Email</th>
-            <td>{{ $employee->email }}</td>
-        </tr>
-        <tr>
-            <th>Nomor Telepon</th>
-            <td>{{ $employee->nomor_telepon }}</td>
-        </tr>
-        <tr>
-            <th>Tanggal Lahir</th>
-            <td>{{ $employee->tanggal_lahir }}</td>
-        </tr>
-        <tr>
-            <th>Alamat</th>
-            <td>{{ $employee->alamat }}</td>
-        </tr>
-        <tr>
-            <th>Tanggal Masuk</th>
-            <td>{{ $employee->tanggal_masuk }}</td>
-        </tr>
-        <tr>
-            <th>Status</th>
-            <td>{{ $employee->status }}</td>
-        </tr>
-    </table>
-    <a href="{{ route('employees.index') }}" class="btn btn-secondary">Kembali</a>
+    <div class="card shadow-sm">
+        <div class="card-header bg-info text-white">
+            <h5 class="card-title mb-0">Detail Karyawan: {{ $employee->nama_lengkap }}</h5>
+        </div>
+        <div class="card-body">
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <strong class="d-block">Nama Lengkap:</strong>
+                    <p class="fs-5">{{ $employee->nama_lengkap }}</p>
+                </div>
+                <div class="col-md-6">
+                    <strong class="d-block">Email:</strong>
+                    <p class="fs-5">{{ $employee->email }}</p>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <strong class="d-block">Nomor Telepon:</strong>
+                    <p class="fs-5">{{ $employee->nomor_telepon }}</p>
+                </div>
+                <div class="col-md-6">
+                    <strong class="d-block">Tanggal Lahir:</strong>
+                    <p class="fs-5">{{ \Carbon\Carbon::parse($employee->tanggal_lahir)->format('d F Y') }}</p>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <strong class="d-block">Departemen:</strong>
+                    <p class="fs-5">{{ $employee->department->nama_departemen ?? 'N/A' }}</p>
+                </div>
+                <div class="col-md-6">
+                    <strong class="d-block">Jabatan:</strong>
+                    <p class="fs-5">{{ $employee->position->nama_jabatan ?? 'N/A' }}</p>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <strong class="d-block">Alamat:</strong>
+                <p class="fs-5">{{ $employee->alamat }}</p>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <strong class="d-block">Tanggal Masuk:</strong>
+                    <p class="fs-5">{{ \Carbon\Carbon::parse($employee->tanggal_masuk)->format('d F Y') }}</p>
+                </div>
+                <div class="col-md-6">
+                    <strong class="d-block">Status:</strong>
+                    <p class="fs-5">
+                        @if($employee->status == 'aktif')
+                            <span class="badge bg-success fs-6">Aktif</span>
+                        @elseif($employee->status == 'cuti')
+                            <span class="badge bg-warning text-dark fs-6">Cuti</span>
+                        @else
+                            <span class="badge bg-secondary fs-6">Tidak Aktif</span>
+                        @endif
+                    </p>
+                </div>
+            </div>
+
+            <hr>
+            <div class="d-flex justify-content-end">
+                <a href="{{ route('employees.index') }}" class="btn btn-secondary">Kembali ke Daftar</a>
+            </div>
+        </div>
+    </div>
 @endsection

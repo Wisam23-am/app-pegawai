@@ -14,23 +14,31 @@
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-dark">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#"><b>@yield('page-title', 'App Pegawai')</b></a>
+                    <a class="navbar-brand" href="{{ url('/') }}"><b>SHEMSTARTUP</b></a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav ms-auto">
                             <li class="nav-item">
-                                <a class="nav-link active" href="{{ url('/employees') }}">Employee</a>
+                                <a class="nav-link {{ Request::is('employees*') ? 'active' : '' }}"
+                                    href="{{ route('employees.index') }}">Employee</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Department</a>
+                                <a class="nav-link {{ Request::is('departments*') ? 'active' : '' }}"
+                                    href="{{ route('departments.index') }}">Department</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Attendance</a>
+                                <a class="nav-link {{ Request::is('positions*') ? 'active' : '' }}"
+                                    href="{{ route('positions.index') }}">Jabatan</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Report</a>
+                                <a class="nav-link {{ Request::is('attendances*') ? 'active' : '' }}"
+                                    href="{{ route('attendances.index') }}">Attendance</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ Request::is('salaries*') ? 'active' : '' }}"
+                                    href="{{ route('salaries.index') }}">Salary</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Settings</a>

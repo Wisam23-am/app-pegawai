@@ -14,10 +14,10 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('karyawan_id');
             $table->string('bulan', 10);
-            $table->decimal('gaji_pokok', 10, 2);
-            $table->decimal('tunjangan', 10, 2)->default(0);
-            $table->decimal('potongan', 10, 2)->default(0);
-            $table->decimal('total_gaji', 10, 2);
+            $table->decimal('gaji_pokok', 15, 2);
+            $table->decimal('tunjangan', 15, 2)->default(0);
+            $table->decimal('potongan', 15, 2)->default(0);
+            $table->decimal('total_gaji', 15, 2);
             $table->timestamps();
 
             // Relasi ke tabel employees

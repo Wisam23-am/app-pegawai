@@ -1,12 +1,12 @@
 @extends('master')
 
-@section('title', 'Daftar Karyawan')
-@section('page-title', 'Manajemen Karyawan')
+@section('title', 'Daftar Absensi')
+@section('page-title', 'Manajemen Absensi')
 
 @section('content')
-    <div class="card shadow-sm">
+    <div class="card shadow">
         <div class="card-header bg-primary text-white">
-            <h5 class="card-title mb-0">Daftar Karyawan</h5>
+            <h5 class="card-title mb-0">Daftar Absensi</h5>
         </div>
         <div class="card-body">
 
@@ -17,8 +17,8 @@
                 </div>
             @endif
 
-            <a href="{{ route('employees.create') }}" class="btn btn-success mb-3">
-                <i class="bi bi-plus-lg"></i> Tambah Karyawan
+            <a href="{{ route('attendances.create') }}" class="btn btn-success mb-3">
+                <i class="bi bi-plus-lg"></i> Tambah Absensi
             </a>
 
             <div class="table-responsive">
@@ -27,50 +27,46 @@
                         <tr>
                             {{-- UBAH INI --}}
                             <th style="width: 5%;">No.</th>
-                            <th>Nama Lengkap</th>
-                            <th>Email</th>
-                            <th>Telepon</th>
-                            <th>Jabatan</th>
-                            <th>Departemen</th>
+                            <th>Nama Karyawan</th>
+                            <th>Tanggal</th>
+                            <th>Jam Masuk</th>
+                            <th>Jam Keluar</th>
                             <th>Status</th>
-                            <th style="width: 20%;">Aksi</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($employees as $employee)
+                        @forelse ($attendances as $att)
                             <tr>
-                                <td class="text-center">{{ $employees->firstItem() + $loop->index }}</td>
-                                <td>{{ $employee->nama_lengkap }}</td>
-                                <td>{{ $employee->email }}</td>
-                                <td>{{ $employee->nomor_telepon }}</td>
-                                <td>{{ $employee->position->nama_jabatan ?? 'N/A' }}</td>
-                                <td>{{ $employee->department->nama_departemen ?? 'N/A' }}</td>
+                                {{-- UBAH INI --}}
+                                <td class="text-center">{{ $attendances->firstItem() + $loop->index }}</td>
+                                <td>{{ $att->employee->nama_lengkap ?? 'Karyawan Dihapus' }}</td>
+                                <td>{{ \Carbon\Carbon::parse($att->tanggal)->format('d M Y') }}</td>
+                                <td class="text-center">{{ $att->waktu_masuk }}</td>
+                                <td class="text-center">{{ $att->waktu_keluar ?? '-' }}</td>
                                 <td class="text-center">
-                                    @if($employee->status == 'aktif')
-                                        <span class="badge bg-success">Aktif</span>
-                                    @elseif($employee->status == 'cuti')
-                                        <span class="badge bg-warning text-dark">Cuti</span>
+                                    @if($att->status_absensi == 'hadir')
+                                        <span class="badge bg-success">Hadir</span>
+                                    @elseif($att->status_absensi == 'izin')
+                                        <span class="badge bg-warning text-dark">Izin</span>
+                                    @elseif($att->status_absensi == 'sakit')
+                                        <span class="badge bg-info">Sakit</span>
                                     @else
-                                        <span class="badge bg-secondary">Tidak Aktif</span>
+                                        <span class="badge bg-danger">Alpha</span>
                                     @endif
                                 </td>
                                 <td class="text-center">
                                     <form onsubmit="return confirm('Apakah Anda Yakin?');"
-                                        action="{{ route('employees.destroy', $employee->id) }}" method="POST">
-                                        {{-- Tombol Detail --}}
-                                        <a href="{{ route('employees.show', $employee->id) }}"
+                                        action="{{ route('attendances.destroy', $att->id) }}" method="POST">
+                                        <a href="{{ route('attendances.show', $att->id) }}"
                                             class="btn btn-sm btn-info text-white me-1">
                                             <i class="bi bi-eye"></i> Detail
                                         </a>
-                                        {{-- Tombol Edit --}}
-                                        <a href="{{ route('employees.edit', $employee->id) }}"
-                                            class="btn btn-sm btn-primary me-1">
+                                        <a href="{{ route('attendances.edit', $att->id) }}" class="btn btn-sm btn-primary me-1">
                                             <i class="bi bi-pencil-square"></i> Edit
                                         </a>
-
                                         @csrf
                                         @method('DELETE')
-                                        {{-- Tombol Hapus --}}
                                         <button type="submit" class="btn btn-sm btn-danger">
                                             <i class="bi bi-trash"></i> Hapus
                                         </button>
@@ -79,9 +75,9 @@
                             </tr>
                         @empty
                             <tr>
-                                {{-- Pastikan colspan sesuai jumlah kolom thead --}}
-                                <td colspan="8" class="text-center alert alert-danger">
-                                    Data Karyawan belum Tersedia.
+                                {{-- Pastikan colspan sesuai --}}
+                                <td colspan="7" class="text-center alert alert-danger">
+                                    Data Absensi belum Tersedia.
                                 </td>
                             </tr>
                         @endforelse
@@ -89,7 +85,7 @@
                 </table>
 
                 <div class="d-flex justify-content-center">
-                    {{ $employees->links() }}
+                    {{ $attendances->links() }}
                 </div>
             </div>
         </div>
