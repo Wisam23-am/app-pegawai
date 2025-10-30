@@ -2,7 +2,7 @@
 
 Sebuah sistem manajemen karyawan (Employee Management System) yang futuristik dan modern, dibangun menggunakan Laravel. Aplikasi ini dirancang untuk mengelola data inti sumber daya manusia dalam sebuah perusahaan, mulai dari data karyawan, absensi, hingga penggajian.
 
-*(Disarankan untuk menambahkan screenshot aplikasi di sini untuk membuatnya lebih menarik)*
+![app-pegawai/employees](images/screenshot-aplikasi.png)
 
 ## 🚀 Fitur Utama
 
@@ -27,7 +27,7 @@ Aplikasi ini mencakup modul-modul penting untuk manajemen HR:
 
 1.  **Clone repositori ini:**
     ```bash
-    git clone [URL_REPOSITORY_ANDA]
+    git clone https://github.com/Wisam23-am/app-pegawai.git
     cd app-pegawai
     ```
 
