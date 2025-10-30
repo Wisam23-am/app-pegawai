@@ -60,16 +60,6 @@ Aplikasi ini mencakup modul-modul penting untuk manajemen HR:
     php artisan migrate
     ```
 
-8.  **Jalankan server pengembangan:**
-    * Mulai server Vite:
-        ```bash
-        npm run dev
-        ```
-    * Di terminal lain, mulai server Laravel:
-        ```bash
-        php artisan serve
-        ```
-
 9.  **Selesai!**
     Aplikasi sekarang seharusnya berjalan di `http://127.0.0.1:8000`.
 
