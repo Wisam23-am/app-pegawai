@@ -2,7 +2,7 @@
 
 Sebuah sistem manajemen karyawan (Employee Management System) yang futuristik dan modern, dibangun menggunakan Laravel. Aplikasi ini dirancang untuk mengelola data inti sumber daya manusia dalam sebuah perusahaan, mulai dari data karyawan, absensi, hingga penggajian.
 
-![app-pegawai/employees](images/screenshot-aplikasi.png)
+![app-pegawai/employees](images/Screenshot-employee.png)
 
 ## 🚀 Fitur Utama
 
