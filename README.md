@@ -72,3 +72,5 @@ Berikut adalah rute utama yang didefinisikan dalam aplikasi ini:
 * `/positions` - (Manajemen Jabatan)
 * `/attendances` - (Manajemen Absensi)
 * `/salaries` - (Manajemen Gaji)
+
+## Terimakasih Telah Mengunjungi Halaman Ini
