@@ -32,4 +32,10 @@ class Employee extends Model
     {
         return $this->belongsTo(Position::class, 'jabatan_id');
     }
+
+    public function user()
+    {
+        return $this->hasOne(\App\Models\User::class);
+    }
+
 }

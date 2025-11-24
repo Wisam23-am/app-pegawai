@@ -17,10 +17,15 @@ class RegisteredUserController extends Controller
     /**
      * Display the registration view.
      */
-    public function create(): View
+    public function create(Request $request): View
     {
-        return view('auth.register');
+        $employee = null;
+        if ($request->has('email')) {
+            $employee = \App\Models\Employee::where('email', $request->query('email'))->first();
+        }
+        return view('auth.register', compact('employee'));
     }
+
 
     /**
      * Handle an incoming registration request.
@@ -30,19 +35,58 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
+        $employee = \App\Models\Employee::where('email', $request->email)->first();
+
+        if (!$employee) {
+            return back()
+                ->withErrors(['email' => 'Email tidak terdaftar sebagai pegawai. Hubungi admin.'])
+                ->withInput();
+        }
+
+        if (\App\Models\User::where('email', $request->email)->exists()) {
+            return back()
+                ->withErrors(['email' => 'Email sudah terdaftar. Silakan login.'])
+                ->withInput();
+        }
+
+        $role = 'employee';
+
+        try {
+            if (!empty($employee->jabatan_id)) {
+                if (class_exists(\App\Models\Jabatan::class)) {
+                    $jab = \App\Models\Jabatan::find($employee->jabatan_id);
+                    if ($jab && isset($jab->nama)) {
+                        $jabName = strtolower(trim($jab->nama));
+                        if ($jabName === 'admin' || $jabName === 'administrator') {
+                            $role = 'admin';
+                        }
+                    }
+                } else {
+                    if (isset($employee->jabatan) && is_string($employee->jabatan)) {
+                        $jabName = strtolower(trim($employee->jabatan));
+                        if ($jabName === 'admin' || $jabName === 'administrator') {
+                            $role = 'admin';
+                        }
+                    }
+                }
+            }
+        } catch (\Throwable $e) {
+            $role = 'employee';
+        }
+
+        $user = \App\Models\User::create([
+            'name' => $employee->nama_lengkap,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'employee_id' => $employee->id,
+            'role' => $role,
         ]);
 
         event(new Registered($user));
-
         Auth::login($user);
 
         return redirect(route('dashboard', absolute: false));
