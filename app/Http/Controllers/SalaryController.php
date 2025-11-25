@@ -106,4 +106,20 @@ class SalaryController extends Controller
         return redirect()->route('salaries.index')
             ->with('success', 'Data gaji berhasil dihapus.');
     }
+
+    public function me()
+    {
+        $user = auth()->user();
+
+        if (!$user->employee) {
+            return redirect()->route('dashboard')
+                ->with('error', 'Akun Anda tidak terhubung dengan data pegawai manapun.');
+        }
+
+        $salaries = Salary::with('employee')
+            ->where('karyawan_id', $user->employee->id)
+            ->latest()
+            ->paginate(10);
+        return view('salaries.index', compact('salaries'));
+    }
 }

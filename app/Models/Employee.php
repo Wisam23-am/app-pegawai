@@ -23,6 +23,29 @@ class Employee extends Model
         'jabatan_id',
     ];
 
+    /**
+     * The "booted" method of the model.
+     * Logika sinkronisasi otomatis ada di sini.
+     */
+    protected static function booted(): void
+    {
+        static::updated(function (Employee $employee) {
+            if ($employee->user) {
+                $employee->user->update([
+                    'name' => $employee->nama_lengkap, 
+                    'email' => $employee->email,
+                ]);
+            }
+        });
+
+        // Event saat data Employee dihapus (opsional, agar data user bersih)
+        static::deleted(function (Employee $employee) {
+            if ($employee->user) {
+                $employee->user->delete();
+            }
+        });
+    }
+
     public function department()
     {
         return $this->belongsTo(Department::class, 'departemen_id');
@@ -37,5 +60,4 @@ class Employee extends Model
     {
         return $this->hasOne(\App\Models\User::class);
     }
-
 }

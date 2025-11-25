@@ -47,4 +47,22 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/sync-data-pegawai', function () {
+    $employees = Employee::with('user')->get();
+    $count = 0;
+
+    foreach ($employees as $employee) {
+        if ($employee->user) {
+            // Paksa data User mengikuti data Employee
+            $employee->user->update([
+                'name' => $employee->nama_lengkap,
+                'email' => $employee->email,
+            ]);
+            $count++;
+        }
+    }
+
+    return "Sukses! Berhasil menyinkronkan $count data pegawai ke akun user.";
+});
+
 require __DIR__ . '/auth.php';
