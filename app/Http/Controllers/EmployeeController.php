@@ -42,7 +42,8 @@ class EmployeeController extends Controller
 
         Employee::create($validated);
 
-        return redirect()->route('employees.index')->with('success', 'Karyawan berhasil ditambahkan.');
+        return redirect()->route('employees.index')
+            ->with('success', 'Karyawan berhasil ditambahkan. Silakan minta karyawan untuk Register akun.');
     }
 
     public function show(Employee $employee)
@@ -76,12 +77,29 @@ class EmployeeController extends Controller
 
         $employee->update($validated);
 
-        return redirect()->route('employees.index')->with('success', 'Karyawan berhasil diperbarui.');
+        if ($employee->user) {
+            $position = Position::find($request->jabatan_id);
+
+            $role = 'employee';
+            if ($position && stripos($position->nama_jabatan, 'admin') !== false) {
+                $role = 'admin';
+            }
+
+            $employee->user->update([
+                'name' => $employee->nama_lengkap,
+                'email' => $employee->email,
+                'role' => $role,
+            ]);
+        }
+
+        return redirect()->route('employees.index')->with('success', 'Data Karyawan berhasil diperbarui.');
     }
 
     public function destroy(Employee $employee)
     {
-        \App\Models\User::where('employee_id', $employee->id)->delete();
+        if ($employee->user) {
+            $employee->user->delete();
+        }
 
         $employee->delete();
 
