@@ -81,7 +81,10 @@ class EmployeeController extends Controller
 
     public function destroy(Employee $employee)
     {
+        \App\Models\User::where('employee_id', $employee->id)->delete();
+
         $employee->delete();
+
         return redirect()->route('employees.index')->with('success', 'Karyawan berhasil dihapus.');
     }
 }
