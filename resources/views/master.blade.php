@@ -15,8 +15,10 @@
             --dark-bg: #0a0e27;
             --card-bg: rgba(15, 23, 42, 0.8);
             --glass-bg: rgba(255, 255, 255, 0.05);
-            --text-primary: #e2e8f0;
-            --text-secondary: #94a3b8;
+            --text-primary: #f8fafc;
+            /* Diperterang (Slate 50) */
+            --text-secondary: #cbd5e1;
+            /* Diperterang (Slate 300) - Sebelumnya #94a3b8 */
             --border-glow: rgba(102, 126, 234, 0.3);
             --shadow-glow: 0 0 20px rgba(102, 126, 234, 0.4);
         }
@@ -34,6 +36,21 @@
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
+        }
+
+        /* PERBAIKAN FONT: Override class Bootstrap agar terlihat di background gelap */
+        .text-secondary,
+        .text-muted {
+            color: var(--text-secondary) !important;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            color: var(--text-primary) !important;
         }
 
         /* Animated Background */
@@ -365,7 +382,8 @@
             padding: 1rem !important;
             vertical-align: middle !important;
             border: 1px solid rgba(102, 126, 234, 0.2) !important;
-            color: #e2e8f0 !important;
+            color: var(--text-primary) !important;
+            /* Ganti hardcoded #e2e8f0 dengan variable */
             background: transparent !important;
         }
 

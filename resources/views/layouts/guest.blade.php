@@ -22,8 +22,10 @@
             --dark-bg: #0a0e27;
             --card-bg: rgba(15, 23, 42, 0.8);
             --glass-bg: rgba(255, 255, 255, 0.05);
-            --text-primary: #e2e8f0;
-            --text-secondary: #94a3b8;
+            --text-primary: #f8fafc;
+            /* Slate 50 */
+            --text-secondary: #cbd5e1;
+            /* Slate 300 */
             --border-glow: rgba(102, 126, 234, 0.3);
             --shadow-glow: 0 0 20px rgba(102, 126, 234, 0.4);
         }
