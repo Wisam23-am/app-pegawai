@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Aplikasi Pegawai')</title>
+    <title>@yield('title', 'Aplikasi Pegawai') - SHEMSTARTUP</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
@@ -315,42 +315,15 @@
             font-size: 0.875rem;
         }
 
-        /* Table Styles */
+        /* Table & Other Styles */
         .table-responsive {
             border-radius: 12px;
             overflow-x: auto;
-            overflow-y: visible;
-            -webkit-overflow-scrolling: touch;
             margin-bottom: 1rem;
             position: relative;
             padding-bottom: 0.5rem;
             border: 1px solid var(--border-glow);
             background: var(--card-bg);
-        }
-
-        /* Custom Scrollbar untuk Table - Lebih Visible */
-        .table-responsive::-webkit-scrollbar {
-            height: 12px;
-            background: rgba(15, 23, 42, 0.5);
-        }
-
-        .table-responsive::-webkit-scrollbar-track {
-            background: rgba(15, 23, 42, 0.8);
-            border-radius: 10px;
-            margin: 0 10px;
-            border: 2px solid rgba(102, 126, 234, 0.2);
-        }
-
-        .table-responsive::-webkit-scrollbar-thumb {
-            background: var(--primary-gradient);
-            border-radius: 10px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
-        }
-
-        .table-responsive::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
-            box-shadow: 0 0 15px rgba(102, 126, 234, 0.8);
         }
 
         .table {
@@ -361,7 +334,6 @@
             background: transparent;
         }
 
-        /* Table Header */
         .table thead {
             background: var(--primary-gradient);
             position: relative;
@@ -375,23 +347,12 @@
             letter-spacing: 1px;
             padding: 1rem !important;
             color: #ffffff !important;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
             background: transparent !important;
         }
 
-        .table thead th:first-child {
-            border-left: none !important;
-        }
-
-        .table thead th:last-child {
-            border-right: none !important;
-        }
-
-        /* Table Body Rows */
         .table tbody tr {
             background: rgba(15, 23, 42, 0.4) !important;
             transition: all 0.3s ease;
-            position: relative;
         }
 
         .table tbody tr:hover {
@@ -400,95 +361,14 @@
             box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
         }
 
-        .table tbody tr:hover::before {
-            opacity: 1;
-        }
-
-        /* Zebra striping */
-        .table-striped tbody tr:nth-of-type(odd) {
-            background: rgba(15, 23, 42, 0.6) !important;
-        }
-
-        .table-striped tbody tr:nth-of-type(even) {
-            background: rgba(15, 23, 42, 0.3) !important;
-        }
-
-        .table-striped tbody tr:hover {
-            background: rgba(102, 126, 234, 0.2) !important;
-        }
-
-        /* Table Cells */
         .table tbody td {
             padding: 1rem !important;
             vertical-align: middle !important;
             border: 1px solid rgba(102, 126, 234, 0.2) !important;
             color: #e2e8f0 !important;
-            position: relative;
-            transition: all 0.2s ease;
             background: transparent !important;
         }
 
-        .table tbody td:first-child {
-            font-weight: 600;
-            color: #a78bfa !important;
-        }
-
-        /* Hover effect pada cell */
-        .table tbody tr:hover td {
-            border-color: rgba(102, 126, 234, 0.4) !important;
-            color: #ffffff !important;
-        }
-
-        /* Corner borders untuk last row */
-        .table tbody tr:last-child td:first-child {
-            border-bottom-left-radius: 12px;
-        }
-
-        .table tbody tr:last-child td:last-child {
-            border-bottom-right-radius: 12px;
-        }
-
-        /* Empty table message */
-        .table tbody td[colspan] {
-            text-align: center !important;
-            padding: 2rem !important;
-            border: 2px dashed rgba(245, 87, 108, 0.5) !important;
-            background: rgba(245, 87, 108, 0.1) !important;
-            border-radius: 8px;
-            color: #fb7185 !important;
-        }
-
-        /* Remove conflicting Bootstrap styles */
-        .table-dark,
-        .table-bordered thead th,
-        .table-hover tbody tr:hover {
-            background: transparent !important;
-        }
-
-        /* Action buttons in table */
-        .action-buttons {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: nowrap;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .action-buttons .btn {
-            padding: 0.4rem 0.8rem;
-            font-size: 0.85rem;
-            white-space: nowrap;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.3rem;
-        }
-
-        .action-buttons form {
-            margin: 0;
-            display: inline-block;
-        }
-
-        /* Badge Styles */
         .badge {
             padding: 0.4rem 0.8rem;
             border-radius: 20px;
@@ -509,7 +389,6 @@
             }
         }
 
-        /* Form Styles */
         .form-control,
         .form-select {
             background: var(--glass-bg);
@@ -528,146 +407,26 @@
             color: var(--text-primary);
         }
 
-        .form-label {
-            color: var(--text-secondary);
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Detail Page Styles */
-        .card-body strong {
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .card-body p {
-            color: var(--text-primary);
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .card-body .fs-5 {
-            color: var(--text-primary) !important;
-            font-weight: 500;
-        }
-
-        /* Row and Column text colors */
-        .row .col-md-6 strong,
-        .row .col-md-6 p,
-        .mb-3 strong,
-        .mb-3 p {
-            color: var(--text-primary);
-        }
-
-        .mb-3 strong {
-            color: var(--text-secondary);
-        }
-
-        /* Alert Styles */
-        .alert {
-            border-radius: 12px;
-            border: none;
-            backdrop-filter: blur(10px);
-            animation: slideInRight 0.5s ease-out;
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .alert-success {
-            background: rgba(34, 197, 94, 0.2);
-            color: #4ade80;
-            border-left: 4px solid #22c55e;
-        }
-
-        .alert-danger {
-            background: rgba(245, 87, 108, 0.2);
-            color: #fb7185;
-            border-left: 4px solid #f5576c;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--glass-bg);
+        /* Dropdown Menu Customization */
+        .dropdown-menu {
+            background: var(--card-bg);
             backdrop-filter: blur(20px);
-            border-top: 1px solid var(--border-glow);
-            padding: 1.5rem 0;
-            margin-top: 3rem;
-        }
-
-        /* Pagination */
-        .pagination {
-            gap: 0.5rem;
-        }
-
-        .page-link {
-            background: var(--glass-bg);
             border: 1px solid var(--border-glow);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .dropdown-item {
             color: var(--text-primary);
-            border-radius: 8px;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
 
-        .page-link:hover {
-            background: var(--primary-gradient);
-            border-color: transparent;
+        .dropdown-item:hover {
+            background: rgba(102, 126, 234, 0.2);
             color: white;
-            transform: translateY(-2px);
         }
 
-        .page-item.active .page-link {
-            background: var(--primary-gradient);
-            border-color: transparent;
-        }
-
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--dark-bg);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary-gradient);
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
-        }
-
-        /* Loading Animation */
-        .loader {
-            width: 50px;
-            height: 50px;
-            border: 4px solid rgba(102, 126, 234, 0.3);
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 2rem auto;
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
+        .dropdown-divider {
+            border-top: 1px solid var(--border-glow);
         }
 
         /* Responsive adjustments */
@@ -684,7 +443,6 @@
 </head>
 
 <body>
-    <!-- Floating Particles -->
     <script>
         for (let i = 0; i < 20; i++) {
             const particle = document.createElement('div');
@@ -700,48 +458,88 @@
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-dark">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="{{ url('/') }}">
+                    <a class="navbar-brand" href="{{ route('dashboard') }}">
                         <i class="bi bi-stars"></i> SHEMSTARTUP
                     </a>
+
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                         <span class="navbar-toggler-icon"></span>
                     </button>
+
                     <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav ms-auto">
+                        <ul class="navbar-nav ms-auto align-items-center">
                             <li class="nav-item">
-                                <a class="nav-link {{ Request::is('employees*') ? 'active' : '' }}"
+                                <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}"
+                                    href="{{ route('dashboard') }}">
+                                    <i class="bi bi-speedometer2"></i> Dashboard
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('employees.*') ? 'active' : '' }}"
                                     href="{{ route('employees.index') }}">
-                                    <i class="bi bi-people-fill"></i> Employee
+                                    <i class="bi bi-people-fill"></i> Employees
                                 </a>
                             </li>
+
                             <li class="nav-item">
-                                <a class="nav-link {{ Request::is('departments*') ? 'active' : '' }}"
+                                <a class="nav-link {{ request()->routeIs('departments.*') ? 'active' : '' }}"
                                     href="{{ route('departments.index') }}">
-                                    <i class="bi bi-building"></i> Department
+                                    <i class="bi bi-building"></i> Departments
                                 </a>
                             </li>
+
                             <li class="nav-item">
-                                <a class="nav-link {{ Request::is('positions*') ? 'active' : '' }}"
+                                <a class="nav-link {{ request()->routeIs('positions.*') ? 'active' : '' }}"
                                     href="{{ route('positions.index') }}">
-                                    <i class="bi bi-briefcase-fill"></i> Jabatan
+                                    <i class="bi bi-briefcase-fill"></i> Positions
                                 </a>
                             </li>
+
                             <li class="nav-item">
-                                <a class="nav-link {{ Request::is('attendances*') ? 'active' : '' }}"
+                                <a class="nav-link {{ request()->routeIs('attendances.*') ? 'active' : '' }}"
                                     href="{{ route('attendances.index') }}">
                                     <i class="bi bi-calendar-check"></i> Attendance
                                 </a>
                             </li>
+
                             <li class="nav-item">
-                                <a class="nav-link {{ Request::is('salaries*') ? 'active' : '' }}"
-                                    href="{{ route('salaries.index') }}">
-                                    <i class="bi bi-cash-coin"></i> Salary
-                                </a>
+                                @if(Auth::user()->role === 'admin')
+                                    <a class="nav-link {{ request()->routeIs('salaries.*') ? 'active' : '' }}"
+                                        href="{{ route('salaries.index') }}">
+                                        <i class="bi bi-cash-coin"></i> Salary
+                                    </a>
+                                @else
+                                    <a class="nav-link {{ request()->routeIs('salaries.*') ? 'active' : '' }}"
+                                        href="{{ route('salaries.me') }}">
+                                        <i class="bi bi-cash-coin"></i> Salary
+                                    </a>
+                                @endif
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <i class="bi bi-gear-fill"></i> Settings
+
+                            <li class="nav-item dropdown ms-lg-2">
+                                <a class="nav-link dropdown-toggle btn btn-sm border-0 d-flex align-items-center"
+                                    href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-person-circle me-1"></i> {{ Auth::user()->name }}
                                 </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('profile.edit') }}">
+                                            <i class="bi bi-person"></i> Profile
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li>
+                                        <form method="POST" action="{{ route('logout') }}">
+                                            @csrf
+                                            <button type="submit" class="dropdown-item text-danger">
+                                                <i class="bi bi-box-arrow-right"></i> Log Out
+                                            </button>
+                                        </form>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                     </div>
@@ -777,11 +575,7 @@
         });
 
         // Add animation on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -100px 0px' };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -790,11 +584,7 @@
             });
         }, observerOptions);
 
-        document.querySelectorAll('.card, .table-responsive').forEach(el => {
-            observer.observe(el);
-        });
-
-
+        document.querySelectorAll('.card, .table-responsive').forEach(el => { observer.observe(el); });
     </script>
 </body>
 
