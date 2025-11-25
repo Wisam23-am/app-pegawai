@@ -17,15 +17,17 @@
                 </div>
             @endif
 
-            <a href="{{ route('departments.create') }}" class="btn btn-success mb-3">
-                <i class="bi bi-plus-lg"></i> Tambah Departemen
-            </a>
+            {{-- HANYA ADMIN --}}
+            @if(Auth::user()->role === 'admin')
+                <a href="{{ route('departments.create') }}" class="btn btn-success mb-3">
+                    <i class="bi bi-plus-lg"></i> Tambah Departemen
+                </a>
+            @endif
 
             <div class="table-responsive">
                 <table class="table table-bordered table-striped table-hover">
                     <thead class="table-dark text-center">
                         <tr>
-                            {{-- UBAH INI --}}
                             <th style="width: 5%;">No.</th>
                             <th>Nama Departemen</th>
                             <th style="width: 20%;">Aksi</th>
@@ -34,34 +36,37 @@
                     <tbody>
                         @forelse ($departments as $department)
                             <tr>
-                                {{-- UBAH INI --}}
                                 <td class="text-center">{{ $departments->firstItem() + $loop->index }}</td>
                                 <td>{{ $department->nama_departemen }}</td>
                                 <td class="text-center">
                                     <div class="action-buttons">
+                                        {{-- DETAIL UNTUK SEMUA --}}
                                         <a href="{{ route('departments.show', $department->id) }}"
                                             class="btn btn-sm btn-info text-white" title="Detail">
                                             <i class="bi bi-eye"></i>
                                         </a>
-                                        <a href="{{ route('departments.edit', $department->id) }}"
-                                            class="btn btn-sm btn-primary" title="Edit">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </a>
-                                        <form onsubmit="return confirm('Apakah Anda Yakin?');"
-                                            action="{{ route('departments.destroy', $department->id) }}" method="POST"
-                                            class="d-inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
-                                        </form>
+
+                                        {{-- EDIT & DELETE HANYA ADMIN --}}
+                                        @if(Auth::user()->role === 'admin')
+                                            <a href="{{ route('departments.edit', $department->id) }}"
+                                                class="btn btn-sm btn-primary" title="Edit">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+                                            <form onsubmit="return confirm('Apakah Anda Yakin?');"
+                                                action="{{ route('departments.destroy', $department->id) }}" method="POST"
+                                                class="d-inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </form>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                {{-- Pastikan colspan sesuai --}}
                                 <td colspan="3" class="text-center alert alert-danger">
                                     Data Departemen belum Tersedia.
                                 </td>

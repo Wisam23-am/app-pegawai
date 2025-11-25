@@ -17,9 +17,12 @@
                 </div>
             @endif
 
-            <a href="{{ route('salaries.create') }}" class="btn btn-success mb-3">
-                <i class="bi bi-plus-lg"></i> Tambah Data Gaji
-            </a>
+            {{-- HANYA ADMIN --}}
+            @if(Auth::user()->role === 'admin')
+                <a href="{{ route('salaries.create') }}" class="btn btn-success mb-3">
+                    <i class="bi bi-plus-lg"></i> Tambah Data Gaji
+                </a>
+            @endif
 
             <div class="table-responsive">
                 <table class="table table-bordered table-striped table-hover">
@@ -43,23 +46,28 @@
                                 <td class="text-end"><b>Rp {{ number_format($salary->total_gaji, 0, ',', '.') }}</b></td>
                                 <td class="text-center">
                                     <div class="action-buttons">
+                                        {{-- DETAIL UNTUK SEMUA --}}
                                         <a href="{{ route('salaries.show', $salary->id) }}"
                                             class="btn btn-sm btn-info text-white" title="Detail">
                                             <i class="bi bi-eye"></i>
                                         </a>
-                                        <a href="{{ route('salaries.edit', $salary->id) }}" class="btn btn-sm btn-primary"
-                                            title="Edit">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </a>
-                                        <form onsubmit="return confirm('Apakah Anda Yakin?');"
-                                            action="{{ route('salaries.destroy', $salary->id) }}" method="POST"
-                                            class="d-inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
-                                        </form>
+
+                                        {{-- EDIT & DELETE HANYA ADMIN --}}
+                                        @if(Auth::user()->role === 'admin')
+                                            <a href="{{ route('salaries.edit', $salary->id) }}" class="btn btn-sm btn-primary"
+                                                title="Edit">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+                                            <form onsubmit="return confirm('Apakah Anda Yakin?');"
+                                                action="{{ route('salaries.destroy', $salary->id) }}" method="POST"
+                                                class="d-inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </form>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>

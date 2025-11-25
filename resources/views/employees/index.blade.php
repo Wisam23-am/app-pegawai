@@ -19,9 +19,12 @@
                 </div>
             @endif
 
-            <a href="{{ route('employees.create') }}" class="btn btn-success mb-3">
-                <i class="bi bi-plus-lg"></i> Tambah Karyawan
-            </a>
+            {{-- HANYA ADMIN YANG BISA MELIHAT TOMBOL TAMBAH --}}
+            @if(Auth::user()->role === 'admin')
+                <a href="{{ route('employees.create') }}" class="btn btn-success mb-3">
+                    <i class="bi bi-plus-lg"></i> Tambah Karyawan
+                </a>
+            @endif
 
             <div class="table-responsive">
                 <table class="table table-bordered table-striped table-hover">
@@ -57,22 +60,27 @@
                                 </td>
                                 <td>
                                     <div class="action-buttons">
+                                        {{-- TOMBOL DETAIL BISA DILIHAT SEMUA ROLE --}}
                                         <a href="{{ route('employees.show', $employee->id) }}"
                                             class="btn btn-sm btn-info text-white" title="Detail">
                                             <i class="bi bi-eye"></i>
                                         </a>
-                                        <a href="{{ route('employees.edit', $employee->id) }}" class="btn btn-sm btn-primary"
-                                            title="Edit">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </a>
-                                        <form onsubmit="return confirm('Apakah Anda Yakin?');"
-                                            action="{{ route('employees.destroy', $employee->id) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
-                                        </form>
+
+                                        {{-- TOMBOL EDIT & HAPUS HANYA UNTUK ADMIN --}}
+                                        @if(Auth::user()->role === 'admin')
+                                            <a href="{{ route('employees.edit', $employee->id) }}" class="btn btn-sm btn-primary"
+                                                title="Edit">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+                                            <form onsubmit="return confirm('Apakah Anda Yakin?');"
+                                                action="{{ route('employees.destroy', $employee->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </form>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
