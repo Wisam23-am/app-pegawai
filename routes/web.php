@@ -7,15 +7,25 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\SalaryController;
+use App\Models\Employee;
+use App\Models\Department;
+use App\Models\Position;
+use App\Models\User;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('dashboard', [
+        'total_employees' => Employee::count(),
+        'total_departments' => Department::count(),
+        'total_positions' => Position::count(),
+        'total_users' => User::count(),
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+// ... sisa kode route lainnya tetap sama ...
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('employees', EmployeeController::class)->except(['index', 'show']);
     Route::resource('departments', DepartmentController::class)->except(['index', 'show']);
