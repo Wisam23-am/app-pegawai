@@ -45,6 +45,7 @@ Route::middleware('auth')->group(function () {
     Route::get('salaries/{salary}', [SalaryController::class, 'show'])->name('salaries.show');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('attendances/submit', [AttendanceController::class, 'submitAttendance'])->name('attendances.submit');
 });
 
 Route::get('/sync-data-pegawai', function () {

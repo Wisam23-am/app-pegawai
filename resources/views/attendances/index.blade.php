@@ -1,93 +1,124 @@
 @extends('master')
 
-@section('title', 'Daftar Absensi')
+@section('title', 'Absensi')
 @section('page-title', 'Manajemen Absensi')
 
 @section('content')
     <div class="card shadow">
-        <div class="card-header bg-primary text-white">
-            <h5 class="card-title mb-0">Daftar Absensi</h5>
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h5 class="card-title mb-0">
+                {{ Auth::user()->role === 'admin' ? 'Data Absensi Semua Pegawai' : 'Absensi Saya' }}
+            </h5>
         </div>
         <div class="card-body">
-
             @if(session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     {{ session('success') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
+            @if(session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
 
-            <a href="{{ route('attendances.create') }}" class="btn btn-success mb-3">
-                <i class="bi bi-plus-lg"></i> Tambah Absensi
-            </a>
+            {{-- BAGIAN TOMBOL ABSENSI (Hanya untuk Non-Admin atau Semua User jika admin juga absen) --}}
+            @if(Auth::user()->role !== 'admin' || true) {{-- Hapus '|| true' jika admin tidak butuh tombol absen sendiri
+                --}}
+                <div class="text-center mb-4">
+                    <h4 class="mb-3">Halo, {{ Auth::user()->name }}</h4>
+                    <p class="text-muted">{{ \Carbon\Carbon::now()->isoFormat('dddd, D MMMM Y') }}</p>
+
+                    <form action="{{ route('attendances.submit') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-primary btn-lg px-5 py-3 rounded-pill shadow">
+                            <i class="bi bi-fingerprint"></i> KLIK UNTUK ABSEN
+                        </button>
+                    </form>
+                    <small class="text-muted d-block mt-2">
+                        Klik sekali untuk Datang, klik lagi untuk Pulang/Update Pulang.
+                    </small>
+                </div>
+                <hr>
+            @endif
+
+            {{-- TOMBOL ADMIN (Hanya muncul jika user adalah admin) --}}
+            @if(Auth::user()->role === 'admin')
+                <div class="mb-3 text-end">
+                    <a href="{{ route('attendances.create') }}" class="btn btn-success">
+                        <i class="bi bi-plus-lg"></i> Tambah Manual (Admin)
+                    </a>
+                </div>
+            @endif
 
             <div class="table-responsive">
                 <table class="table table-bordered table-striped table-hover">
                     <thead class="table-dark text-center">
                         <tr>
-                            {{-- UBAH INI --}}
                             <th style="width: 5%;">No.</th>
-                            <th>Nama Karyawan</th>
+                            {{-- Hanya tampilkan nama karyawan jika Admin --}}
+                            @if(Auth::user()->role === 'admin')
+                                <th>Nama Karyawan</th>
+                            @endif
                             <th>Tanggal</th>
                             <th>Jam Masuk</th>
                             <th>Jam Keluar</th>
                             <th>Status</th>
-                            <th>Aksi</th>
+                            {{-- Aksi hanya untuk Admin --}}
+                            @if(Auth::user()->role === 'admin')
+                                <th>Aksi</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($attendances as $att)
                             <tr>
-                                {{-- UBAH INI --}}
                                 <td class="text-center">{{ $attendances->firstItem() + $loop->index }}</td>
-                                <td>{{ $att->employee->nama_lengkap ?? 'Karyawan Dihapus' }}</td>
-                                <td>{{ \Carbon\Carbon::parse($att->tanggal)->format('d M Y') }}</td>
+
+                                @if(Auth::user()->role === 'admin')
+                                    <td>{{ $att->employee->nama_lengkap ?? 'Karyawan Dihapus' }}</td>
+                                @endif
+
+                                <td class="text-center">{{ \Carbon\Carbon::parse($att->tanggal)->format('d M Y') }}</td>
                                 <td class="text-center">{{ $att->waktu_masuk }}</td>
                                 <td class="text-center">{{ $att->waktu_keluar ?? '-' }}</td>
                                 <td class="text-center">
-                                    @if($att->status_absensi == 'hadir')
-                                        <span class="badge bg-success">Hadir</span>
-                                    @elseif($att->status_absensi == 'izin')
-                                        <span class="badge bg-warning text-dark">Izin</span>
-                                    @elseif($att->status_absensi == 'sakit')
-                                        <span class="badge bg-info">Sakit</span>
-                                    @else
-                                        <span class="badge bg-danger">Alpha</span>
-                                    @endif
+                                    <span
+                                        class="badge bg-{{ $att->status_absensi == 'hadir' ? 'success' : ($att->status_absensi == 'izin' ? 'warning' : 'danger') }}">
+                                        {{ ucfirst($att->status_absensi) }}
+                                    </span>
                                 </td>
-                                <td class="text-center">
-                                    <div class="action-buttons">
-                                        <a href="{{ route('attendances.show', $att->id) }}"
-                                            class="btn btn-sm btn-info text-white" title="Detail">
-                                            <i class="bi bi-eye"></i>
-                                        </a>
-                                        <a href="{{ route('attendances.edit', $att->id) }}" class="btn btn-sm btn-primary"
-                                            title="Edit">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </a>
-                                        <form onsubmit="return confirm('Apakah Anda Yakin?');"
-                                            action="{{ route('attendances.destroy', $att->id) }}" method="POST"
-                                            class="d-inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
-                                        </form>
-                                    </div>
-                                </td>
+
+                                @if(Auth::user()->role === 'admin')
+                                    <td class="text-center">
+                                        <div class="action-buttons">
+                                            <a href="{{ route('attendances.edit', $att->id) }}" class="btn btn-sm btn-primary">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+                                            <form onsubmit="return confirm('Hapus data ini?');"
+                                                action="{{ route('attendances.destroy', $att->id) }}" method="POST"
+                                                class="d-inline">
+                                                @csrf @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-danger">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                @endif
                             </tr>
                         @empty
                             <tr>
-                                {{-- Pastikan colspan sesuai --}}
-                                <td colspan="7" class="text-center alert alert-danger">
-                                    Data Absensi belum Tersedia.
+                                <td colspan="{{ Auth::user()->role === 'admin' ? 7 : 5 }}"
+                                    class="text-center alert alert-secondary">
+                                    Belum ada riwayat absensi.
                                 </td>
                             </tr>
                         @endforelse
                     </tbody>
                 </table>
-
                 <div class="d-flex justify-content-center">
                     {{ $attendances->links() }}
                 </div>
