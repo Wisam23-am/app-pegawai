@@ -11,27 +11,33 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
     <style>
+        /* MENGGUNAKAN CSS DARI MASTER.BLADE.PHP */
         :root {
-            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --primary-gradient: linear-gradient(135deg, #4c6ef5 0%, #5f3dc4 100%);
+            --secondary-gradient: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            --success-gradient: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
+            --danger-gradient: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            --accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --neon-blue: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
             --dark-bg: #0a0e27;
-            --card-bg: rgba(15, 23, 42, 0.8);
+            --card-bg: rgba(15, 23, 42, 0.85);
             --glass-bg: rgba(255, 255, 255, 0.05);
-            --text-primary: #f8fafc;
-            /* Slate 50 */
+            --text-primary: #ffffff;
             --text-secondary: #cbd5e1;
-            /* Slate 300 */
-            --border-glow: rgba(102, 126, 234, 0.3);
-            --shadow-glow: 0 0 20px rgba(102, 126, 234, 0.4);
+            --border-color: rgba(71, 85, 105, 0.5);
+            --border-glow: rgba(99, 102, 241, 0.3);
+            --shadow-glow: 0 0 30px rgba(99, 102, 241, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Figtree', 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: var(--dark-bg);
             color: var(--text-primary);
             min-height: 100vh;
@@ -39,7 +45,7 @@
             position: relative;
         }
 
-        /* Animated Background */
+        /* Animated Background (Sama dengan Master) */
         body::before {
             content: '';
             position: fixed;
@@ -48,11 +54,11 @@
             width: 100%;
             height: 100%;
             background:
-                radial-gradient(circle at 20% 30%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(245, 87, 108, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(74, 222, 128, 0.05) 0%, transparent 50%);
+                radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.06) 0%, transparent 50%);
             z-index: -1;
-            animation: bgShift 15s ease infinite;
+            animation: bgShift 20s ease infinite;
         }
 
         @keyframes bgShift {
@@ -62,28 +68,33 @@
                 transform: translateY(0) rotate(0deg);
             }
 
-            50% {
-                transform: translateY(-20px) rotate(2deg);
+            33% {
+                transform: translateY(-30px) rotate(2deg);
+            }
+
+            66% {
+                transform: translateY(-15px) rotate(-1deg);
             }
         }
 
-        /* Floating particles */
+        /* Particle Animation (Sama dengan Master) */
         .particle {
             position: fixed;
             width: 3px;
             height: 3px;
-            background: rgba(102, 126, 234, 0.6);
+            background: linear-gradient(135deg, #60a5fa, #818cf8);
             border-radius: 50%;
             pointer-events: none;
             z-index: -1;
-            animation: float 10s infinite ease-in-out;
+            animation: float 15s infinite ease-in-out;
+            box-shadow: 0 0 8px rgba(96, 165, 250, 0.5);
         }
 
         @keyframes float {
 
             0%,
             100% {
-                transform: translateY(0) translateX(0);
+                transform: translateY(0) translateX(0) scale(1);
                 opacity: 0;
             }
 
@@ -91,27 +102,55 @@
                 opacity: 1;
             }
 
+            50% {
+                transform: translateY(-50vh) translateX(30px) scale(1.5);
+                opacity: 0.8;
+            }
+
             90% {
-                opacity: 1;
+                opacity: 0.3;
             }
 
             100% {
-                transform: translateY(-100vh) translateX(50px);
+                transform: translateY(-100vh) translateX(80px) scale(0.5);
                 opacity: 0;
             }
         }
 
-        /* Card Styles */
+        /* Auth Card (Diadaptasi dari gaya .card di Master) */
         .auth-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--border-glow);
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(25px) saturate(180%);
+            border: 1px solid var(--border-color);
             border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
             padding: 2rem;
             width: 100%;
             max-width: 450px;
             animation: fadeInUp 0.8s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Efek Shine pada Card (Sama dengan Master) */
+        .auth-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 150%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.1), transparent);
+            transition: left 0.8s ease;
+        }
+
+        .auth-card:hover::before {
+            left: 150%;
+        }
+
+        .auth-card:hover {
+            border-color: rgba(99, 102, 241, 0.5);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(99, 102, 241, 0.3);
         }
 
         @keyframes fadeInUp {
@@ -126,10 +165,11 @@
             }
         }
 
-        /* Form Controls */
+        /* Form Controls (Diadaptasi dari Master) */
         .form-control {
-            background: var(--glass-bg);
-            border: 1px solid var(--border-glow);
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
             color: var(--text-primary);
             border-radius: 10px;
             padding: 0.75rem 1rem;
@@ -137,10 +177,10 @@
         }
 
         .form-control:focus {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(102, 126, 234, 0.6);
-            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
-            color: white;
+            background: rgba(30, 41, 59, 0.8);
+            border-color: rgba(99, 102, 241, 0.6);
+            box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.15);
+            color: var(--text-primary);
         }
 
         .form-control::placeholder {
@@ -154,10 +194,10 @@
             margin-bottom: 0.5rem;
         }
 
-        /* Input Group Customization (untuk ikon amplop menyatu) */
+        /* Input Group Customization */
         .input-group-text {
-            border: 1px solid var(--border-glow);
-            background: var(--glass-bg);
+            border: 1px solid var(--border-color);
+            background: rgba(30, 41, 59, 0.6);
             color: var(--text-secondary);
             border-right: none;
             border-top-left-radius: 10px;
@@ -170,35 +210,55 @@
             border-bottom-right-radius: 10px;
         }
 
-        .input-group .form-control:focus {
-            box-shadow: none;
-            border-color: rgba(102, 126, 234, 0.6);
-        }
-
         .input-group:focus-within .input-group-text,
         .input-group:focus-within .form-control {
-            border-color: rgba(102, 126, 234, 0.6);
-            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
-            color: white;
+            border-color: rgba(99, 102, 241, 0.6);
+            box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.15);
+            color: var(--text-primary);
         }
 
-        /* Buttons */
+        /* Buttons (Diadaptasi dari Master .btn dan .btn-primary) */
         .btn-primary {
+            position: relative;
+            overflow: hidden;
             background: var(--primary-gradient);
             border: none;
             border-radius: 10px;
             padding: 0.75rem 1.5rem;
             font-weight: 600;
+            letter-spacing: 0.3px;
             width: 100%;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+            z-index: 1;
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5);
         }
 
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+            z-index: -1;
+        }
+
+        .btn-primary:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        /* Links & Logo */
         .brand-logo {
             font-size: 2rem;
             font-weight: 800;
@@ -219,8 +279,15 @@
         }
 
         .auth-links a:hover {
-            color: #fff;
+            color: #818cf8;
+            /* Light indigo accent */
             text-decoration: underline;
+        }
+
+        /* Text colors */
+        .text-secondary,
+        .text-muted {
+            color: var(--text-secondary) !important;
         }
     </style>
 </head>
