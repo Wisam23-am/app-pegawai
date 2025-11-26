@@ -19,12 +19,24 @@
                 </div>
             @endif
 
-            {{-- HANYA ADMIN YANG BISA MELIHAT TOMBOL TAMBAH --}}
-            @if(Auth::user()->role === 'admin')
-                <a href="{{ route('employees.create') }}" class="btn btn-success mb-3">
-                    <i class="bi bi-plus-lg"></i> Tambah Karyawan
-                </a>
-            @endif
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    @if(Auth::user()->role === 'admin')
+                        <a href="{{ route('employees.create') }}" class="btn btn-success">
+                            <i class="bi bi-plus-lg"></i> Tambah Karyawan
+                        </a>
+                    @endif
+                </div>
+                <div class="col-md-6">
+                    <form action="{{ route('employees.index') }}" method="GET">
+                        <div class="input-group">
+                            <input type="text" name="search" class="form-control" placeholder="Cari Nama atau Email..."
+                                value="{{ request('search') }}">
+                            <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i> Cari</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
             <div class="table-responsive">
                 <table class="table table-bordered table-striped table-hover">

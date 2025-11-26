@@ -13,19 +13,30 @@ class AttendanceController extends Controller
     /**
      * Menampilkan daftar absensi (Read)
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
 
-        if ($user->role === 'admin') {
-            $attendances = Attendance::with('employee')->latest()->paginate(10);
+        $query = Attendance::with('employee');
+
+        if ($user->role !== 'admin') {
+            $query->where('karyawan_id', $user->employee_id);
         }
-        else {
-            $attendances = Attendance::with('employee')
-                ->where('karyawan_id', $user->employee_id)
-                ->latest()
-                ->paginate(10);
+
+        // Logika Search
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('tanggal', 'LIKE', "%{$search}%") // Cari Tanggal
+                    ->orWhereHas('employee', function ($subQ) use ($search) {
+                        $subQ->where('nama_lengkap', 'LIKE', "%{$search}%"); // Cari Nama Pegawai
+                    });
+            });
         }
+
+        $attendances = $query->latest()
+            ->paginate(10)
+            ->withQueryString();
 
         return view('attendances.index', compact('attendances'));
     }

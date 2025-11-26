@@ -9,11 +9,22 @@ use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $employees = Employee::with(['department', 'position'])
-            ->latest()
-            ->paginate(10);
+        $query = Employee::with(['department', 'position']);
+
+        // Logika Search
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('nama_lengkap', 'LIKE', "%{$search}%")
+                    ->orWhere('email', 'LIKE', "%{$search}%");
+            });
+        }
+
+        $employees = $query->latest()
+            ->paginate(10)
+            ->withQueryString(); 
 
         return view('employees.index', compact('employees'));
     }

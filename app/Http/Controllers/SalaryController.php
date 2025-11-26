@@ -8,9 +8,25 @@ use Illuminate\Http\Request;
 
 class SalaryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $salaries = Salary::with('employee')->latest()->paginate(10);
+        $query = Salary::with('employee');
+
+        // Logika Search
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('bulan', 'LIKE', "%{$search}%") // Cari Bulan (string)
+                    ->orWhereHas('employee', function ($subQ) use ($search) {
+                        $subQ->where('nama_lengkap', 'LIKE', "%{$search}%"); // Cari Nama
+                    });
+            });
+        }
+
+        $salaries = $query->latest()
+            ->paginate(10)
+            ->withQueryString();
+
         return view('salaries.index', compact('salaries'));
     }
 

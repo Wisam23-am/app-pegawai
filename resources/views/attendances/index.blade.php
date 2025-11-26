@@ -44,14 +44,25 @@
                 <hr>
             @endif
 
-            {{-- TOMBOL ADMIN (Hanya muncul jika user adalah admin) --}}
-            @if(Auth::user()->role === 'admin')
-                <div class="mb-3 text-end">
-                    <a href="{{ route('attendances.create') }}" class="btn btn-success">
-                        <i class="bi bi-plus-lg"></i> Tambah Manual (Admin)
-                    </a>
+            <div class="row mb-3 align-items-center">
+                <div class="col-md-6">
+                    {{-- Form Pencarian --}}
+                    <form action="{{ route('attendances.index') }}" method="GET">
+                        <div class="input-group">
+                            <input type="text" name="search" class="form-control"
+                                placeholder="Cari Nama atau Tanggal (YYYY-MM-DD)..." value="{{ request('search') }}">
+                            <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i> Cari</button>
+                        </div>
+                    </form>
                 </div>
-            @endif
+                <div class="col-md-6 text-end">
+                    @if(Auth::user()->role === 'admin')
+                        <a href="{{ route('attendances.create') }}" class="btn btn-success">
+                            <i class="bi bi-plus-lg"></i> Tambah Manual (Admin)
+                        </a>
+                    @endif
+                </div>
+            </div>
 
             <div class="table-responsive">
                 <table class="table table-bordered table-striped table-hover">
