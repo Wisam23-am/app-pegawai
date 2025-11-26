@@ -75,10 +75,7 @@
                     <h4 class="card-title fw-bold mb-3"><i class="bi bi-lightning-charge-fill text-warning"></i> Aksi Cepat
                     </h4>
                     <div class="d-flex flex-wrap gap-2">
-                        {{-- Tombol Tambah Pegawai --}}
-                        <a href="{{ route('employees.create') }}" class="btn btn-primary">
-                            <i class="bi bi-plus-lg"></i> Tambah Pegawai
-                        </a>
+
 
                         {{-- Tombol Cek Absensi (User Biasa) --}}
                         @if(Auth::user()->role !== 'admin')
@@ -89,6 +86,11 @@
 
                         {{-- Tombol Khusus Admin --}}
                         @if(Auth::user()->role === 'admin')
+                            {{-- Tombol Tambah Pegawai --}}
+                            <a href="{{ route('employees.create') }}" class="btn btn-primary">
+                                <i class="bi bi-plus-lg"></i> Tambah Pegawai
+                            </a>
+                            
                             {{-- Kelola Absensi --}}
                             <a href="{{ route('attendances.index') }}" class="btn btn-info text-white">
                                 <i class="bi bi-clipboard-data"></i> Kelola Absensi
